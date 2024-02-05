@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import Chat from './Chat';
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");
@@ -13,10 +12,9 @@ export default function Register() {
   const handleRegister = async () => {
     try {
       const response = await axios.post('http://localhost:8000/api/register/', { username, email, password1, password2 });
-      console.log('Register response:', response.data.response);
-      if(response.data.response === 'Account created successfully!') {
-        alert('Registration successful!');
-        
+      console.log('Register response:', response.status, response.data.response);
+      if(response.status === 200) {
+        //TODO: Redirect to chatbot page
       }
     } catch (error) {
       console.error('Error registering:', error);
