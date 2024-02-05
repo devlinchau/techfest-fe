@@ -49,7 +49,7 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-screen w-full lg:w-2/3 mx-auto">
       <div className="flex-grow p-4 overflow-y-auto">
-        <div className="mb-4 p-2 rounded-lg bg-slate-700">
+        <div className="mb-4 px-4 py-3 rounded-lg bg-slate-700">
           <span className="font-semibold text-gray-100">Chatbot</span>
           <br />
           <span className="text-gray-200">Hello! How can I assist you today?</span>
@@ -60,7 +60,7 @@ export default function Chat() {
           .sort((a, b) => a.index - b.index)).map((item, index) => (
             <div
             key={index}
-            className={`mb-4 p-2 rounded-lg ${item.isChatbot ? 'bg-slate-700' : 'bg-gray-200'} 
+            className={`mb-4 px-4 py-3 rounded-lg ${item.isChatbot ? 'bg-slate-700' : 'bg-gray-200'} 
             ${!item.isChatbot ? 'text-right' : ''}`}
           >
             <span className={`font-semibold ${item.isChatbot ? 'text-gray-100' : ''}`}>
