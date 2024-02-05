@@ -1,22 +1,45 @@
-// src/components/Chat.tsx
-import { useState } from 'react';
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
+import React, { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import axios from 'axios';
 
 export default function Chat() {
   const [input, setInput] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<string[]>(JSON.parse(localStorage.getItem('chatMessages') || '[]'));
+  const [replies, setReplies] = useState<string[]>(JSON.parse(localStorage.getItem('chatReplies') || '[]'));
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+    localStorage.setItem('chatReplies', JSON.stringify(replies));
+  }, [messages, replies]);
+
+  useEffect(() => {
+    const sendMessageToApi = async () => {
+      try {
+        setLoading(true); 
+        const response = await axios.post('http://localhost:8000/chatbot/chatbot/', { message: messages[messages.length-1] });
+        setReplies([...replies, response.data.response]);
+      } catch (error) {
+        console.error('Error sending message to API:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    if (messages.length > replies.length) {
+      sendMessageToApi();
+    }
+  }, [messages]);
 
   const handleSendMessage = () => {
     setMessages([...messages, input]);
     setInput("");
-    // Implement logic to send message to the backend or OpenAI API
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // Prevents the default behavior (e.g., submitting a form)
+      e.preventDefault();
       handleSendMessage();
     } else if (e.key === 'Enter' && e.shiftKey) {
       setInput((prevInput) => prevInput + "\n");
@@ -26,15 +49,37 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-screen w-full lg:w-2/3 mx-auto">
       <div className="flex-grow p-4 overflow-y-auto">
-        {messages.map((message, index) => (
-          <div key={index} className="mb-2 p-2 rounded-lg bg-gray-200">
-            <span className="font-semibold">User</span>
+        <div className="mb-4 p-2 rounded-lg bg-slate-700">
+          <span className="font-semibold text-gray-100">Chatbot</span>
+          <br />
+          <span className="text-gray-200">Hello! How can I assist you today?</span>
+        </div>
+        {([...messages.map((message, index) => ({ content: message, index, isChatbot: false })), 
+        ...replies.map((reply, index) => (
+          { content: reply, index, isChatbot: true }))]
+          .sort((a, b) => a.index - b.index)).map((item, index) => (
+            <div
+            key={index}
+            className={`mb-4 p-2 rounded-lg ${item.isChatbot ? 'bg-slate-700' : 'bg-gray-200'} 
+            ${!item.isChatbot ? 'text-right' : ''}`}
+          >
+            <span className={`font-semibold ${item.isChatbot ? 'text-gray-100' : ''}`}>
+              {item.isChatbot ? 'Chatbot' : 'User'}
+            </span>
             <br />
-            <span className="text-gray-800">{message}</span>
+            <span className={`${item.isChatbot ? 'text-gray-200' : ''}`}>{item.content}</span>
           </div>
         ))}
       </div>
 
+      {loading && (
+        <div className="flex justify-center items-center mb-5">
+          <div 
+            className="animate-spin rounded-full border-t-4 border-blue-900 
+            border-opacity-50 h-12 w-12"></div>
+        </div>
+      )}
+  
       <div className="flex w-full max-w-full items-center space-x-2 p-4">
         <Input 
           className='flex-wrap'
@@ -50,9 +95,13 @@ export default function Chat() {
         >
           Send
         </Button>
+        <Button
+          type="button"
+          onClick={() => {localStorage.clear(); setMessages([]); setReplies([]);}}
+          >
+            CLEAR
+        </Button>
       </div>
-
     </div>
   );
 };
-
