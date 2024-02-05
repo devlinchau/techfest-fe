@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
 import Markdown from "markdown-to-jsx";
 import Highlight from "react-highlight";
+import { axiosInstance } from "@/lib/utils";
 
 export default function Chat() {
   const [input, setInput] = useState<string>("");
@@ -24,10 +24,9 @@ export default function Chat() {
     const sendMessageToApi = async () => {
       try {
         setLoading(true);
-        const response = await axios.post(
-          "http://localhost:8000/api/chatbot/",
-          { message: messages[messages.length - 1] },
-        );
+        const response = await axiosInstance.post("/api/chatbot/", {
+          message: messages[messages.length - 1],
+        });
         setReplies([...replies, response.data.response]);
       } catch (error) {
         console.error("Error sending message to API:", error);
@@ -81,13 +80,15 @@ export default function Chat() {
           .map((item, index) => (
             <div
               key={index}
-              className={`mb-4 px-4 py-3 rounded-lg ${item.isChatbot ? "bg-slate-700" : "bg-gray-200"
-                } 
+              className={`mb-4 px-4 py-3 rounded-lg ${
+                item.isChatbot ? "bg-slate-700" : "bg-gray-200"
+              } 
             ${!item.isChatbot ? "text-right" : ""}`}
             >
               <span
-                className={`font-semibold ${item.isChatbot ? "text-gray-100" : ""
-                  }`}
+                className={`font-semibold ${
+                  item.isChatbot ? "text-gray-100" : ""
+                }`}
               >
                 {item.isChatbot ? "Chatbot" : "User"}
               </span>
