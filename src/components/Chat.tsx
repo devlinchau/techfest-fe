@@ -18,7 +18,7 @@ export default function Chat() {
     const sendMessageToApi = async () => {
       try {
         setLoading(true); 
-        const response = await axios.post('http://localhost:8000/chatbot/chatbot/', { message: messages[messages.length-1] });
+        const response = await axios.post('http://localhost:8000/api/chatbot/', { message: messages[messages.length-1] });
         setReplies([...replies, response.data.response]);
       } catch (error) {
         console.error('Error sending message to API:', error);
