@@ -1,4 +1,4 @@
-import Chat from "@/components/chat";
+import Register from "@/components/Register";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -6,5 +6,5 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  return <Chat />;
+  return <Register />;
 }

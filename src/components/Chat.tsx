@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Markdown from "markdown-to-jsx";
 import Highlight from "react-highlight";
-import { axiosInstance } from "@/lib/utils";
+import { axiosInstance, nameAtom } from "@/lib/utils";
+import { useAtomValue } from "jotai";
 
 export default function Chat() {
+  const name = useAtomValue(nameAtom);
   const [input, setInput] = useState<string>("");
   const [messages, setMessages] = useState<string[]>(
     JSON.parse(localStorage.getItem("chatMessages") || "[]"),
@@ -61,7 +63,7 @@ export default function Chat() {
           <span className="font-semibold text-gray-100">Chatbot</span>
           <br />
           <span className="text-gray-200">
-            Hello! How can I assist you today?
+            Hello {name}! How can I assist you today?
           </span>
         </div>
         {[

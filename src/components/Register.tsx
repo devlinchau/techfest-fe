@@ -2,19 +2,20 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
-import { axiosInstance } from "@/lib/utils";
+import { axiosInstance, nameAtom } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useToast } from "./ui/use-toast";
+import { useSetAtom } from "jotai";
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password1, setPassword1] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
+  const setName = useSetAtom(nameAtom);
 
   const navigate = useNavigate();
-  const {toast} = useToast();
-
+  const { toast } = useToast();
   const registerMutation = useMutation({
     mutationFn: (user: {
       username: string;
@@ -39,13 +40,14 @@ export default function Register() {
           toast({
             variant: "default",
             title: "Created User Successfully!",
-          })
-          navigate({ to: "/" });
+          });
+          navigate({ to: "/chat" });
+          setName(username);
         },
         onError: (error) => {
           console.error(`Error registering: ${error.message}`);
         },
-      },
+      }
     );
   };
 
