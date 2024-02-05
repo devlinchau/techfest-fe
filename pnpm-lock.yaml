@@ -23,12 +23,18 @@ dependencies:
   lucide-react:
     specifier: ^0.321.0
     version: 0.321.0(react@18.2.0)
+  markdown-to-jsx:
+    specifier: ^7.4.1
+    version: 7.4.1(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  react-highlight:
+    specifier: ^0.15.0
+    version: 0.15.0
   tailwind-merge:
     specifier: ^2.2.1
     version: 2.2.1
@@ -46,6 +52,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.17
     version: 18.2.18
+  '@types/react-highlight':
+    specifier: ^0.12.8
+    version: 0.12.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.14.0
     version: 6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -1296,6 +1305,12 @@ packages:
     dependencies:
       '@types/react': 18.2.52
 
+  /@types/react-highlight@0.12.8:
+    resolution: {integrity: sha512-V7O7zwXUw8WSPd//YUO8sz489J/EeobJljASGhP0rClrvq+1Y1qWEpToGu+Pp7YuChxhAXSgkLkrOYpZX5A62g==}
+    dependencies:
+      '@types/react': 18.2.52
+    dev: true
+
   /@types/react@18.2.52:
     resolution: {integrity: sha512-E/YjWh3tH+qsLKaUzgpZb5AY0ChVa+ZJzF7ogehVILrFpdQk6nC/WXOv0bfFEABbXbgNxLBGU7IIZByPKb6eBw==}
     dependencies:
@@ -2126,6 +2141,10 @@ packages:
     dependencies:
       function-bind: 1.1.2
 
+  /highlight.js@10.7.3:
+    resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
+    dev: false
+
   /ignore@5.3.1:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
@@ -2308,6 +2327,15 @@ packages:
     resolution: {integrity: sha512-Fi9VahIna6642U+2nAGSjnXwUBV3WyfFFPQq4yi3w30jtqxDLfSyiYCtCYCYQZ2KWNZc1MDI+rcsa0t+ChdYpw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /markdown-to-jsx@7.4.1(react@18.2.0):
+    resolution: {integrity: sha512-GbrbkTnHp9u6+HqbPRFJbObi369AgJNXi/sGqq5HRsoZW063xR1XDCaConqq+whfEIAlzB1YPnOgsPc7B7bc/A==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      react: '>= 0.14.0'
     dependencies:
       react: 18.2.0
     dev: false
@@ -2563,6 +2591,12 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-highlight@0.15.0:
+    resolution: {integrity: sha512-5uV/b/N4Z421GSVVe05fz+OfTsJtFzx/fJBdafZyw4LS70XjIZwgEx3Lrkfc01W/RzZ2Dtfb0DApoaJFAIKBtA==}
+    dependencies:
+      highlight.js: 10.7.3
     dev: false
 
   /react-refresh@0.14.0:
