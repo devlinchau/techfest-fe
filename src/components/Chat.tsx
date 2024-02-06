@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Markdown from "markdown-to-jsx";
 import Highlight from "react-highlight";
 import { axiosInstance, nameAtom } from "@/lib/utils";
 import { useAtomValue } from "jotai";
+import { Textarea } from "./ui/textarea";
 
 export default function Chat() {
   const name = useAtomValue(nameAtom);
@@ -47,15 +47,6 @@ export default function Chat() {
     setInput("");
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    } else if (e.key === "Enter" && e.shiftKey) {
-      setInput((prevInput) => prevInput + "\n");
-    }
-  };
-
   return (
     <div className="flex flex-col h-screen w-full lg:w-2/3 mx-auto">
       <div className="flex-grow p-4 overflow-y-auto">
@@ -63,7 +54,16 @@ export default function Chat() {
           <span className="font-semibold text-gray-100">Chatbot</span>
           <br />
           <span className="text-gray-200">
-            Hello {name}! How can I assist you today?
+            Hello {name}! Please input the following details to determine your loan eligibility:
+              <ul className="list-disc ml-4 mt-2">
+                <li><strong className="font-semibold">Loan Amount</strong>: </li>
+                <li><strong className="font-semibold">Interest Rate</strong>: </li>
+                <li><strong className="font-semibold">Annual Income</strong>:</li>
+                <li><strong className="font-semibold">Term</strong> <span className="text-sm">(either 36 or 60 months)</span>: </li>
+                <li><strong className="font-semibold">Grade</strong> <span className="text-sm">(ranging from A to F)</span>: </li>
+                <li><strong className="font-semibold">Purpose of loan</strong> <span className="text-sm">(debt_consolidation, small_business, home_improvement, major_purchase, credit_card,
+                   other, house, medical, car, vacation, moving, renewable_energy, wedding, educational)</span>: </li>
+              </ul>
           </span>
         </div>
         {[
@@ -120,13 +120,10 @@ export default function Chat() {
       )}
 
       <div className="flex w-full max-w-full items-center space-x-2 p-4">
-        <Input
-          className="flex-wrap"
-          type="textarea"
+        <Textarea
           placeholder="Type your message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <Button type="submit" onClick={handleSendMessage}>
           Send

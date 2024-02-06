@@ -8,3 +8,4 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return <Register />;
 }
+ 

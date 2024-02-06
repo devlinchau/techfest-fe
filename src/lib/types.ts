@@ -3,7 +3,7 @@ export type Detail = {
   income: number;
   grade: string;
   employee_length: number;
-  house_ownership: string;
+  home_ownership: string;
 }
 
 export type User = {

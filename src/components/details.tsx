@@ -31,7 +31,7 @@ export default function Details() {
         <br />
         {details.employee_length}
         <br />
-        {details.house_ownership}
+        {details.home_ownership}
       </p>
     </div>
   )
