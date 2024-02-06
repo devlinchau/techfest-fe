@@ -51,7 +51,7 @@ export default function Chat() {
     <div className="flex flex-col h-screen w-full lg:w-2/3 mx-auto">
       <div className="flex-grow p-4 overflow-y-auto">
         <div className="mb-4 px-4 py-3 rounded-lg bg-slate-700">
-          <span className="font-semibold text-gray-100">Chatbot</span>
+          <span className="font-semibold text-gray-100">LoanTong</span>
           <br />
           <span className="text-gray-200">
             Hello {name}! Please input the following details to determine your loan eligibility:
@@ -92,7 +92,7 @@ export default function Chat() {
                   item.isChatbot ? "text-gray-100" : ""
                 }`}
               >
-                {item.isChatbot ? "Chatbot" : "User"}
+                {item.isChatbot ? "LoanTong" : "User"}
               </span>
               <br />
               <span className={`${item.isChatbot ? "text-gray-200" : ""}`}>
